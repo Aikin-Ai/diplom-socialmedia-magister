@@ -49,7 +49,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
             <div>
                 <Image
                     className="rounded-full"
-                    src={post.author.avatar_url}
+                    src={post.author.avatar_url ?? '/Profile_avatar_placeholder_large.png'}
                     alt="user avatar"
                     width={48}
                     height={48}
@@ -57,7 +57,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
             </div>
             <div className="ml-4">
                 <p>
-                    <span className="font-bold">{post.author.name}</span>
+                    <span className="font-bold">{post.author.full_name}</span>
                     <span className="text-sm ml-2 text-gray-400">{post.author.username}</span>
                 </p>
                 <p>{post.content}</p>
