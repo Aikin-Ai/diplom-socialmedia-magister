@@ -1,3 +1,4 @@
+import ImageURLTransformer from "@/components/ImageURLTransformer";
 import { User, createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -16,7 +17,7 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
         <form className="border border-gray-800 border-t-0" action={addPost}>
             <div className="flex py-8 px-4">
                 <div className="h-12 w-12">
-                    <Image src={user.user_metadata.avatar_url ?? '/Profile_avatar_placeholder_large.png'}
+                    <Image src={ImageURLTransformer({ bucket_name: 'avatars', image_url: avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
                         alt="user avatar"
                         width={48}
                         height={48}
