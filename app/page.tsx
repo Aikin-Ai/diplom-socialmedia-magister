@@ -22,9 +22,9 @@ export default async function Home() {
     .select("*, author: profiles(*), likes(user_id)")
     .order("created_at", { ascending: false })
 
-  const { data: avatar } = await supabase
+  const { data: current_user_data } = await supabase
     .from("profiles")
-    .select(`avatar_url`)
+    .select(`avatar_url, username`)
     .eq('id', session.user.id)
     .single()
 
@@ -42,13 +42,13 @@ export default async function Home() {
       <div className="flex justify-between px-4 py-6 border border-gray-800 border-t-0">
         <h1 className="text-xl font-bold">Home</h1>
         <LogoutButton />
-        <Link className="text-white" href="/account">
+        <Link className="text-white" href={"/account/" + current_user_data?.username}>
           <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
             Account
           </button>
         </Link>
       </div>
-      <NewPost user={session.user} avatar_url={avatar?.avatar_url ?? null} />
+      <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} />
       <Posts posts={posts} />
     </div>
   )
