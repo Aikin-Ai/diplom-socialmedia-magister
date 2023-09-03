@@ -4,8 +4,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-type Profiles = Database['public']['Tables']['profiles']['Row']
-
 export default function Avatar({
     uid,
     url,
@@ -13,12 +11,12 @@ export default function Avatar({
     onUpload,
 }: {
     uid: string
-    url: Profiles['avatar_url']
+    url: Profile['avatar_url']
     size: number
     onUpload: (url: string) => void
 }) {
     const supabase = createClientComponentClient<Database>()
-    const [avatarUrl, setAvatarUrl] = useState<Profiles['avatar_url']>(url)
+    const [avatarUrl, setAvatarUrl] = useState<Profile['avatar_url']>(url)
     const [uploading, setUploading] = useState(false)
 
     useEffect(() => {
