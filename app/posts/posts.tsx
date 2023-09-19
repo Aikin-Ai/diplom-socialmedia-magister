@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, experimental_useOptimistic as useOptimistic } from "react";
 import Likes from "./likes";
+import Reposts from "./reposts";
 
 export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
     const [optimisticPosts, addOptimisticPost] = useOptimistic<
@@ -46,8 +47,8 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
     }, [supabase, router])
 
     return optimisticPosts.map((post) => (
-        <div key={post.id}>
-            <div>
+        <div key={post.id} className="border border-gray-800 border-t-0 px-4 py-8 flex">
+            <div className="h-12 w-12">
                 <Image
                     className="rounded-full"
                     src={ImageURLTransformer({ bucket_name: 'avatars', image_url: post.author.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
@@ -62,7 +63,10 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     <span className="text-sm ml-2 text-gray-400">@{post.author.username}</span>
                 </p>
                 <p>{post.content}</p>
-                <Likes post={post} addOptimisticPost={addOptimisticPost} />
+                <div className="flex justify-between">
+                    <Likes post={post} addOptimisticPost={addOptimisticPost} />
+                    <Reposts post={post} addOptimisticPost={addOptimisticPost} />
+                </div>
             </div>
         </div>
     ))

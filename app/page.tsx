@@ -19,7 +19,7 @@ export default async function Home() {
 
   const { data } = await supabase
     .from("posts")
-    .select("*, author: profiles(*), likes(user_id)")
+    .select("*, author: profiles(*), likes(user_id), reposts(user_id)")
     .order("created_at", { ascending: false })
 
   const { data: current_user_data } = await supabase
@@ -34,17 +34,21 @@ export default async function Home() {
     user_has_liked_post: !!post.likes.find(
       (like) => like.user_id === session.user.id
     ),
-    likes: post.likes.length
+    user_has_reposted_post: !!post.reposts.find(
+      (repost) => repost.user_id === session.user.id
+    ),
+    likes: post.likes.length,
+    reposts: post.reposts.length
   })) ?? [];
 
   return (
     <div className="text-white w-full max-w-xl mx-auto">
       <div className="flex justify-between px-4 py-6 border border-gray-800 border-t-0">
-        <h1 className="text-xl font-bold">Home</h1>
+        <h1 className="text-xl font-bold">Домашня сторінка</h1>
         <LogoutButton />
         <Link className="text-white" href={"/account/" + current_user_data?.username}>
           <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-            Account
+            Обліковий запис
           </button>
         </Link>
       </div>

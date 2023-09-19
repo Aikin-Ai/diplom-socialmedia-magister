@@ -26,7 +26,7 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
                 </div>
                 <input name="content"
                     className="bg-inherit flex-1 ml-2 text-2xl text leading-loose placeholder-gray-500 px-2"
-                    placeholder="What is happening?!" />
+                    placeholder="Що відбувається?!" />
             </div>
         </form>
     )

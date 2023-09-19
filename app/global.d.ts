@@ -8,7 +8,9 @@ declare global {
     type PostWithAuthor = Post & {
         author: Profile;
         likes: number;
+        reposts: number;
         user_has_liked_post: boolean;
+        user_has_reposted_post: boolean;
     }
     type Profile = Database['public']['Tables']['profiles']['Row']
 }

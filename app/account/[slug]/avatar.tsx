@@ -30,7 +30,7 @@ export default function Avatar({
                 const url = URL.createObjectURL(data)
                 setAvatarUrl(url)
             } catch (error) {
-                console.log('Error downloading image: ', error)
+                console.log('Помилка завантаження зображення: ', error)
             }
         }
 
@@ -42,7 +42,7 @@ export default function Avatar({
             setUploading(true)
 
             if (!event.target.files || event.target.files.length === 0) {
-                throw new Error('You must select an image to upload.')
+                throw new Error('Ви повинні вибрати зображення для завантаження.')
             }
 
             const file = event.target.files[0]
@@ -57,7 +57,7 @@ export default function Avatar({
 
             onUpload(filePath)
         } catch (error) {
-            console.log('Error uploading avatar!')
+            console.log('Помилка завантаження аватара!')
         } finally {
             setUploading(false)
         }
@@ -79,7 +79,7 @@ export default function Avatar({
             )}
             <div style={{ width: size }}>
                 <label className="cursor-pointer" htmlFor="single">
-                    {uploading ? 'Uploading...' : 'Upload'}
+                    {uploading ? 'Завантаження...' : 'Завантажити'}
                 </label>
                 <input
                     style={{
