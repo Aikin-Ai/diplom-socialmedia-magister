@@ -91,7 +91,7 @@ export default function AccountForm({ session }: { session: Session }) {
                 <input id="email" type="text" value={session?.user.email} disabled className="border rounded p-2 bg-inherit border-gray-500" />
             </div>
             <div className="my-1 flex flex-col">
-                <label htmlFor="fullName">Ім'я </label>
+                <label htmlFor="fullName">Повне Ім'я </label>
                 <input
                     id="fullName"
                     type="text"
