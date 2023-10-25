@@ -1,10 +1,9 @@
-import LogoutButton from "@/components/LogoutButton";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import NewPost from "./posts/new-post";
 import Posts from "./posts/posts";
+import Sidebar from "./sidebar/sidebar";
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +27,10 @@ export default async function Home() {
     .eq('id', session.user.id)
     .single()
 
+  if (current_user_data?.username === null) {
+    redirect('/finishregistration?message=Щоб завершити реєстрацію, введіть ім\'я користувача та повне ім\'я користувача.')
+  }
+
   const posts = data?.map(post => ({
     ...post,
     author: Array.isArray(post.author) ? post.author[0] : post.author,
@@ -42,18 +45,15 @@ export default async function Home() {
   })) ?? [];
 
   return (
-    <div className="text-white w-full max-w-xl mx-auto">
-      <div className="flex justify-between px-4 py-6 border border-gray-800 border-t-0">
-        <h1 className="text-xl font-bold">Домашня сторінка</h1>
-        <LogoutButton />
-        <Link className="text-white" href={"/account/" + current_user_data?.username}>
-          <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-            Обліковий запис
-          </button>
-        </Link>
+    <div className="flex">
+      <Sidebar current_user_data={current_user_data} />
+      <div className="text-white w-full max-w-xl mr-auto ml-4">
+        <div className="flex justify-between px-4 py-6 border border-gray-800 border-t-0">
+          <h1 className="text-xl font-bold">Домашня сторінка</h1>
+        </div>
+        <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} />
+        <Posts posts={posts} />
       </div>
-      <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} />
-      <Posts posts={posts} />
     </div>
   )
 }

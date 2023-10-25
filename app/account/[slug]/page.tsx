@@ -1,7 +1,7 @@
 import Posts from "@/app/posts/posts";
+import Sidebar from "@/app/sidebar/sidebar";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import AccountForm from "./account-form";
 
@@ -14,8 +14,6 @@ export default async function Account({ params }: { params: { slug: string } }) 
     if (!session) {
         redirect('/login')
     }
-
-    // console.log(params);
 
     //get userid from slug
     const { data: userid } = await supabase
@@ -78,26 +76,32 @@ export default async function Account({ params }: { params: { slug: string } }) 
         reposts: post.reposts.length
     })) ?? [];
 
+    const { data: current_user_data } = await supabase
+        .from("profiles")
+        .select(`avatar_url, username`)
+        .eq('id', session.user.id)
+        .single()
+
     return (
-        <div className="text-white w-full max-w-xl mx-auto">
-            <Link href="/">
-                <button>Home</button>
-            </Link>
-            <button>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="stroke-gray-500">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-            </button>
-            <AccountForm session={session} />
-            <Posts posts={posts} />
+        <div className="flex">
+            <Sidebar current_user_data={current_user_data} />
+            <div className="text-white w-full max-w-xl mx-auto">
+                <button>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="stroke-gray-500">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </button>
+                <AccountForm session={session} />
+                <Posts posts={posts} />
+            </div>
         </div>
     )
 }
