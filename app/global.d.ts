@@ -9,8 +9,10 @@ declare global {
         author: Profile;
         likes: number;
         reposts: number;
+        bookmarks: number;
         user_has_liked_post: boolean;
         user_has_reposted_post: boolean;
+        user_has_bookmarked_post: boolean;
     }
     type Profile = Database['public']['Tables']['profiles']['Row']
 }

@@ -9,6 +9,40 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      bookmarks: {
+        Row: {
+          created_at: string
+          id: number
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_post_id_fkey"
+            columns: ["post_id"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookmarks_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       likes: {
         Row: {
           created_at: string
@@ -74,26 +108,26 @@ export interface Database {
       profiles: {
         Row: {
           avatar_url: string | null
-          full_name: string
+          full_name: string | null
           id: string
           updated_at: string | null
-          username: string
+          username: string | null
           website: string | null
         }
         Insert: {
           avatar_url?: string | null
-          full_name: string
+          full_name?: string | null
           id: string
           updated_at?: string | null
-          username: string
+          username?: string | null
           website?: string | null
         }
         Update: {
           avatar_url?: string | null
-          full_name?: string
+          full_name?: string | null
           id?: string
           updated_at?: string | null
-          username?: string
+          username?: string | null
           website?: string | null
         }
         Relationships: [

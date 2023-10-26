@@ -5,6 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, experimental_useOptimistic as useOptimistic } from "react";
+import Bookmarks from "./bookmarks";
 import Likes from "./likes";
 import Reposts from "./reposts";
 
@@ -65,6 +66,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                 <p>{post.content}</p>
                 <div className="flex justify-between">
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
+                    <Bookmarks post={post} addOptimisticPost={addOptimisticPost} />
                     <Reposts post={post} addOptimisticPost={addOptimisticPost} />
                 </div>
             </div>

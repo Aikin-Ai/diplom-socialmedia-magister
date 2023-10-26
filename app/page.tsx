@@ -18,7 +18,7 @@ export default async function Home() {
 
   const { data } = await supabase
     .from("posts")
-    .select("*, author: profiles(*), likes(user_id), reposts(user_id)")
+    .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id)")
     .order("created_at", { ascending: false })
 
   const { data: current_user_data } = await supabase
@@ -40,8 +40,12 @@ export default async function Home() {
     user_has_reposted_post: !!post.reposts.find(
       (repost) => repost.user_id === session.user.id
     ),
+    user_has_bookmarked_post: !!post.bookmarks.find(
+      (bookmark) => bookmark.user_id === session.user.id
+    ),
     likes: post.likes.length,
-    reposts: post.reposts.length
+    reposts: post.reposts.length,
+    bookmarks: post.bookmarks.length
   })) ?? [];
 
   return (
