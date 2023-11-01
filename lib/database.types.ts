@@ -43,6 +43,43 @@ export interface Database {
           }
         ]
       }
+      images: {
+        Row: {
+          created_at: string
+          id: number
+          image_url: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          image_url: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          image_url?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "images_post_id_fkey"
+            columns: ["post_id"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "images_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       likes: {
         Row: {
           created_at: string
