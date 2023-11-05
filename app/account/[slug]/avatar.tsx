@@ -30,7 +30,7 @@ export default function Avatar({
                 const url = URL.createObjectURL(data)
                 setAvatarUrl(url)
             } catch (error) {
-                console.log('Помилка завантаження зображення: ', error)
+                console.error('Помилка завантаження зображення: ', error)
             }
         }
 
@@ -57,7 +57,7 @@ export default function Avatar({
 
             onUpload(filePath)
         } catch (error) {
-            console.log('Помилка завантаження аватара!')
+            console.error('Помилка завантаження аватара!')
         } finally {
             setUploading(false)
         }

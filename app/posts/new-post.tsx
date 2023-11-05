@@ -13,18 +13,18 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
         const supabase = createServerActionClient<Database>({ cookies })
         const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id }).select()
         if (error) {
-            console.log(error)
+            console.error(error)
         }
         if (data && image) {
             const fileExt = (image as File).name.split('.').pop()
             const { data: imageid, error } = await supabase.storage.from('Images').upload(`posts/${data[0].id}.${fileExt}`, image as File)
             if (error) {
-                console.log(error)
+                console.error(error)
             }
             if (imageid) {
                 const { error } = await supabase.from('images').insert({ image_url: imageid.path, post_id: data[0].id, user_id: user.id })
                 if (error) {
-                    console.log(error)
+                    console.error(error)
                 }
             }
         }

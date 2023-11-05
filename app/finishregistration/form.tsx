@@ -13,8 +13,6 @@ export default function FinishRegistrationForm({ session }: { session: Session }
         const username = usernameInput.value;
         const fullName = fullNameInput.value;
 
-        console.log(username, fullName, user?.id)
-
         try {
             let { error } = await supabase
                 .from('profiles')
