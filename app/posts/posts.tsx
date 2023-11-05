@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, experimental_useOptimistic as useOptimistic } from "react";
 import Bookmarks from "./bookmarks";
+import ImageWithModal from "./image-with-modal";
 import Likes from "./likes";
 import Reposts from "./reposts";
 
@@ -64,13 +65,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     <span className="text-sm ml-2 text-gray-400">@{post.author.username}</span>
                 </p>
                 <p>{post.content}</p>
-                {post.image_url && (<Image
-                    src={ImageURLTransformer({ bucket_name: 'Images', image_url: post.image_url }) ?? '/Profile_avatar_placeholder_large.png'}
-                    alt="Зображення публікації"
-                    width={400}
-                    height={400}
-                    className="aspect-video object-cover rounded-xl my-2"
-                />)}
+                {post.image_url && <ImageWithModal image_url={post.image_url} />}
                 <div className="flex justify-between">
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
                     <Bookmarks post={post} addOptimisticPost={addOptimisticPost} />

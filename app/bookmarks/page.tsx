@@ -25,7 +25,7 @@ export default async function Account({ params }: { params: { slug: string } }) 
     //show all bookmarks of user
     const { data } = await supabase
         .from("posts")
-        .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id)")
+        .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
         .in('id', bookmarkIds)
         .order("created_at", { ascending: false })
 
@@ -43,7 +43,8 @@ export default async function Account({ params }: { params: { slug: string } }) 
         ),
         likes: post.likes.length,
         reposts: post.reposts.length,
-        bookmarks: post.bookmarks.length
+        bookmarks: post.bookmarks.length,
+        image_url: post.images[0]?.image_url
     })) ?? [];
 
     const { data: current_user_data } = await supabase
