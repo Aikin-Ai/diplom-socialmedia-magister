@@ -15,7 +15,8 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
         if (error) {
             console.error(error)
         }
-        if (data && image) {
+        if (data && (image as File).size !== 0) {
+            console.log(image)
             const fileExt = (image as File).name.split('.').pop()
             const { data: imageid, error } = await supabase.storage.from('Images').upload(`posts/${data[0].id}.${fileExt}`, image as File)
             if (error) {
