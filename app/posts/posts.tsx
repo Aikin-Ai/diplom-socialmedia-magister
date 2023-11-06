@@ -3,6 +3,7 @@
 import ImageURLTransformer from "@/components/ImageURLTransformer";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, experimental_useOptimistic as useOptimistic, useState } from "react";
 import Bookmarks from "./bookmarks";
@@ -68,7 +69,14 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
             <div className="ml-4">
                 <p>
                     <span className="font-bold">{post.author.full_name}</span>
-                    <span className="text-sm ml-2 text-gray-400">@{post.author.username}</span>
+                    <span className="text-sm ml-2 text-gray-400">
+                        <Link
+                            href={`/account/${post.author.username}`}
+                            className="hover:underline hover:text-blue-500"
+                        >
+                            @{post.author.username}
+                        </Link>
+                    </span>
                 </p>
                 <p>{isClient ? <PostContent post={post} /> : post.content}</p>
                 {post.image_url && <ImageWithModal image_url={post.image_url} />}
