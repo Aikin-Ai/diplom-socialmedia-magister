@@ -4,13 +4,15 @@ import ImageURLTransformer from "@/components/ImageURLTransformer";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, experimental_useOptimistic as useOptimistic } from "react";
+import { useEffect, experimental_useOptimistic as useOptimistic, useState } from "react";
 import Bookmarks from "./bookmarks";
 import ImageWithModal from "./image-with-modal";
 import Likes from "./likes";
+import PostContent from "./post-content";
 import Reposts from "./reposts";
 
 export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
+    const [isClient, setIsClient] = useState(false)
     const [optimisticPosts, addOptimisticPost] = useOptimistic<
         PostWithAuthor[],
         PostWithAuthor
@@ -48,6 +50,10 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
         }
     }, [supabase, router])
 
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
+
     return optimisticPosts.map((post) => (
         <div key={post.id} className="border border-gray-800 border-t-0 px-4 py-8 flex">
             <div className="h-12 w-12">
@@ -64,7 +70,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     <span className="font-bold">{post.author.full_name}</span>
                     <span className="text-sm ml-2 text-gray-400">@{post.author.username}</span>
                 </p>
-                <p>{post.content}</p>
+                <p>{isClient ? <PostContent post={post} /> : post.content}</p>
                 {post.image_url && <ImageWithModal image_url={post.image_url} />}
                 <div className="flex justify-between">
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
