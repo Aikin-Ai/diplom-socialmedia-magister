@@ -1,6 +1,7 @@
 'use client'
 
 import ImageURLTransformer from "@/components/ImageURLTransformer";
+import Labels from "@/components/Labels";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,9 +68,14 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                 />
             </div>
             <div className="ml-4">
-                <p>
+                <div className="flex items-center">
                     <span className="font-bold">{post.author.full_name}</span>
-                    <span className="text-sm ml-2 text-gray-400">
+                    <div>
+                        {post.author.user_label && (
+                            <Labels label={post.author.user_label} />
+                        )}
+                    </div>
+                    <span className="text-sm ml-1 text-gray-400">
                         <Link
                             href={`/account/${post.author.username}`}
                             className="hover:underline hover:text-blue-500"
@@ -77,7 +83,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                             @{post.author.username}
                         </Link>
                     </span>
-                </p>
+                </div>
                 <p>{isClient ? <PostContent post={post} /> : post.content}</p>
                 {post.image_url && <ImageWithModal image_url={post.image_url} />}
                 <div className="flex justify-between">

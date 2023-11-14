@@ -155,6 +155,7 @@ export interface Database {
           full_name: string | null
           id: string
           updated_at: string | null
+          user_label: number | null
           username: string | null
           website: string | null
         }
@@ -163,6 +164,7 @@ export interface Database {
           full_name?: string | null
           id: string
           updated_at?: string | null
+          user_label?: number | null
           username?: string | null
           website?: string | null
         }
@@ -171,6 +173,7 @@ export interface Database {
           full_name?: string | null
           id?: string
           updated_at?: string | null
+          user_label?: number | null
           username?: string | null
           website?: string | null
         }
