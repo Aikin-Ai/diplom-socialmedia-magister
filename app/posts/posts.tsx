@@ -3,6 +3,8 @@
 import ImageURLTransformer from "@/components/ImageURLTransformer";
 import Labels from "@/components/Labels";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { format, formatDistanceToNow } from 'date-fns';
+import { uk } from 'date-fns/locale';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -56,6 +58,18 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
         setIsClient(true)
     }, [])
 
+    const formatDate = (timestamp: string) => {
+        const date = new Date(timestamp)
+        const now = new Date()
+        if (now.getTime() - date.getTime() < 24 * 60 * 60 * 1000) {
+            return formatDistanceToNow(date, { locale: uk })
+        } else if (now.getFullYear() === date.getFullYear()) {
+            return format(date, 'd MMM', { locale: uk })
+        } else {
+            return format(date, 'd MMM y', { locale: uk })
+        }
+    }
+
     return optimisticPosts.map((post) => (
         <div key={post.id} className="border border-gray-800 border-t-0 px-4 py-8 flex">
             <div className="h-12 w-12">
@@ -83,6 +97,9 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                             @{post.author.username}
                         </Link>
                     </span>
+                    <div className="text-sm ml-1 text-gray-400">
+                        - {formatDate(post.created_at)}
+                    </div>
                 </div>
                 <p>{isClient ? <PostContent post={post} /> : post.content}</p>
                 {post.image_url && <ImageWithModal image_url={post.image_url} />}
