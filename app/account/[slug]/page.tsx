@@ -4,6 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AccountForm from "./account-form";
+import AccountPage from "./account-page";
 
 export default async function Account({ params }: { params: { slug: string } }) {
 
@@ -21,9 +22,11 @@ export default async function Account({ params }: { params: { slug: string } }) 
         .select('id')
         .eq('username', params.slug)
 
-    if (!userid || !userid[0].id) {
-        redirect('/')
+    if (!userid || !userid[0]?.id) {
+        redirect('/404')
     }
+
+    const is_current_user = session.user.id === userid[0].id
 
     //get posts and reposts of user
     const { data: userPostsIds } = await supabase
@@ -104,7 +107,11 @@ export default async function Account({ params }: { params: { slug: string } }) 
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
                 </button>
-                <AccountForm session={session} />
+                {is_current_user ? (
+                    <AccountForm session={session} />
+                ) : (
+                    <AccountPage user_id={userid[0].id} />
+                )}
                 <Posts posts={posts} />
             </div>
         </div>
