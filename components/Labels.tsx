@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image"
 export default function Labels({ label }: { label: number | null }) {
     if (!label) return <div></div>
 
@@ -15,6 +16,10 @@ export default function Labels({ label }: { label: number | null }) {
             return (
                 <ModeratorLabel />
             )
+        case 4:
+            return (
+                <BusinessLabel />
+            )
         default:
             return <div></div>
     }
@@ -29,7 +34,7 @@ function GovernmentOfficialLabel() {
 
 function VerifiedLabel() {
     return (
-        <div className="group">
+        <div>
             <svg
                 viewBox="0 0 22 22"
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +53,18 @@ function VerifiedLabel() {
 function ModeratorLabel() {
     return (
         <div>
+        </div>
+    )
+}
+
+function BusinessLabel() {
+    return (
+        <div>
+            <Image
+                src="./city-svgrepo-com.svg"
+                alt="business"
+                width={16}
+                height={16} />
         </div>
     )
 }
