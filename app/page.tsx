@@ -56,7 +56,7 @@ export default async function Home() {
       <div className="text-white w-full max-w-xl mr-auto ml-4">
         <div className="flex justify-start px-4 py-6 border border-gray-800 border-t-0">
           <Image
-            src="./Coat_of_arms_of_Kharkiv.svg"
+            src="/Coat_of_arms_of_Kharkiv.svg"
             width={25}
             height={25}
             alt="Kharkiv"

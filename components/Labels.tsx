@@ -61,7 +61,7 @@ function BusinessLabel() {
     return (
         <div>
             <Image
-                src="./city-svgrepo-com.svg"
+                src="/city-svgrepo-com.svg"
                 alt="business"
                 width={16}
                 height={16} />

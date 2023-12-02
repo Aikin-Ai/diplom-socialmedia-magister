@@ -2,6 +2,7 @@ import Posts from "@/app/posts/posts";
 import Sidebar from "@/app/sidebar/sidebar";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export default async function Account({ params }: { params: { slug: string } }) {
@@ -57,8 +58,14 @@ export default async function Account({ params }: { params: { slug: string } }) 
         <div className="flex">
             <Sidebar current_user_data={current_user_data} />
             <div className="text-white w-full max-w-xl mr-auto ml-4">
-                <div className="flex justify-between px-4 py-6 border border-gray-800 border-t-0">
-                    <h1 className="text-xl font-bold">Закладки</h1>
+                <div className="flex justify-start px-4 py-6 border border-gray-800 border-t-0">
+                    <Image
+                        src="/Coat_of_arms_of_Kharkiv.svg"
+                        width={25}
+                        height={25}
+                        alt="Kharkiv"
+                    ></Image>
+                    <h1 className="text-xl font-bold ml-2">Закладки</h1>
                 </div>
                 <Posts posts={posts} />
             </div>

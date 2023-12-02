@@ -2,6 +2,7 @@ import Posts from "@/app/posts/posts";
 import Sidebar from "@/app/sidebar/sidebar";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import AccountForm from "./account-form";
 import AccountPage from "./account-page";
@@ -94,7 +95,16 @@ export default async function Account({ params }: { params: { slug: string } }) 
         <div className="flex">
             <Sidebar current_user_data={current_user_data} />
             <div className="text-white w-full max-w-xl mx-auto">
-                <button>
+                <div className="flex justify-start px-4 py-6 border border-gray-800 border-t-0">
+                    <Image
+                        src="/Coat_of_arms_of_Kharkiv.svg"
+                        width={25}
+                        height={25}
+                        alt="Kharkiv"
+                    ></Image>
+                    <h1 className="text-xl font-bold ml-2">Профіль</h1>
+                </div>
+                {/* <button>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -106,7 +116,7 @@ export default async function Account({ params }: { params: { slug: string } }) 
                         className="stroke-gray-500">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
-                </button>
+                </button> */}
                 {is_current_user ? (
                     <AccountForm session={session} />
                 ) : (
