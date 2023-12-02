@@ -18,7 +18,7 @@ export default async function SubscriptionPage() {
     return (
         <div className="flex">
             <Sidebar current_user_data={current_user_data} />
-            <div className="text-white w-full max-w-xl min-w-[551px] ml-4 mr-auto">
+            <div className="text-white w-full max-w-xl min-w-[600px] ml-4 mr-auto">
                 <div className="flex justify-start px-4 py-6 border border-gray-800 border-t-0">
                     <Image
                         src="/Coat_of_arms_of_Kharkiv.svg"
