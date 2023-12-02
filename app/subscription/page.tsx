@@ -1,10 +1,9 @@
 import Sidebar from "@/app/sidebar/sidebar";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentClient } from "@/components/CreateServerComponentClient";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 export default async function SubscriptionPage() {
-    const supabase = createServerComponentClient<Database>({ cookies });
+    const supabase = createServerComponentClient()
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) {
         redirect('/login')

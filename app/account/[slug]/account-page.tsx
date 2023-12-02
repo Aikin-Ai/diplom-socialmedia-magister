@@ -1,12 +1,11 @@
+import { createServerComponentClient } from "@/components/CreateServerComponentClient";
 import ImageURLTransformer from "@/components/ImageURLTransformer";
 import Labels from "@/components/Labels";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function AccountPage({ user_id }: { user_id: string }) {
-    const supabase = createServerComponentClient<Database>({ cookies })
+    const supabase = createServerComponentClient()
     const { data } = await supabase.from('profiles').select('*').eq('id', user_id).single()
     if (!data) {
         return (

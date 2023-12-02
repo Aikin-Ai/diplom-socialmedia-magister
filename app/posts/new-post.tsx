@@ -1,6 +1,6 @@
+import { createServerActionClient } from "@/components/CreateServerActionClient";
 import ImageURLTransformer from "@/components/ImageURLTransformer";
-import { User, createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { User } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 
 export const dynamic = "force-dynamic";
@@ -10,13 +10,12 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
         'use server'
         const content = String(formData.get('content'))
         const image = formData.get('image')
-        const supabase = createServerActionClient<Database>({ cookies })
+        const supabase = createServerActionClient()
         const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id }).select()
         if (error) {
             console.error(error)
         }
         if (data && (image as File).size !== 0) {
-            console.log(image)
             const fileExt = (image as File).name.split('.').pop()
             const { data: imageid, error } = await supabase.storage.from('Images').upload(`posts/${data[0].id}.${fileExt}`, image as File)
             if (error) {

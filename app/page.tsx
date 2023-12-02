@@ -1,5 +1,4 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentClient } from "@/components/CreateServerComponentClient";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import NewPost from "./posts/new-post";
@@ -9,7 +8,7 @@ import Sidebar from "./sidebar/sidebar";
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createServerComponentClient();
 
   const { data: { session } } = await supabase.auth.getSession()
 

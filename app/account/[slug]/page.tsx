@@ -1,7 +1,6 @@
 import Posts from "@/app/posts/posts";
 import Sidebar from "@/app/sidebar/sidebar";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createServerComponentClient } from "@/components/CreateServerComponentClient";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import AccountForm from "./account-form";
@@ -9,7 +8,7 @@ import AccountPage from "./account-page";
 
 export default async function Account({ params }: { params: { slug: string } }) {
 
-    const supabase = createServerComponentClient<Database>({ cookies });
+    const supabase = createServerComponentClient();
 
     const { data: { session } } = await supabase.auth.getSession()
 
