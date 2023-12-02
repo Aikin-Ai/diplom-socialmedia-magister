@@ -17,7 +17,7 @@ export default async function AccountPage({ user_id }: { user_id: string }) {
     }
     const withHttp = (url: string) => !/^https?:\/\//i.test(url) ? `https://${url}` : url;
     return (
-        <div className="border border-gray-800 border-t-0 border-r-0 border-l-0">
+        <div className="border border-gray-800 border-t-0">
             <Image
                 className="rounded-full"
                 src={ImageURLTransformer({ bucket_name: 'avatars', image_url: data.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
