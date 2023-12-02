@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, experimental_useOptimistic as useOptimistic, useState } from "react";
 import Bookmarks from "./bookmarks";
+import Comments from "./comments";
 import ImageWithModal from "./image-with-modal";
 import Likes from "./likes";
 import PostContent from "./post-content";
@@ -81,7 +82,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     height={48}
                 />
             </div>
-            <div className="ml-4">
+            <div className="ml-4 flex flex-col flex-grow-[1]">
                 <div className="flex items-center">
                     <span className="font-bold">{post.author.full_name}</span>
                     <div>
@@ -107,6 +108,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
                     <Bookmarks post={post} addOptimisticPost={addOptimisticPost} />
                     <Reposts post={post} addOptimisticPost={addOptimisticPost} />
+                    <Comments />
                 </div>
             </div>
         </div>
