@@ -74,13 +74,17 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
     return optimisticPosts.map((post) => (
         <div key={post.id} className="border border-gray-800 border-t-0 px-4 py-8 flex">
             <div className="h-12 w-12">
-                <Image
-                    className="rounded-full"
-                    src={ImageURLTransformer({ bucket_name: 'avatars', image_url: post.author.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
-                    alt="user avatar"
-                    width={48}
-                    height={48}
-                />
+                <Link
+                    href={`/account/${post.author.username}`}
+                >
+                    <Image
+                        className="rounded-full"
+                        src={ImageURLTransformer({ bucket_name: 'avatars', image_url: post.author.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
+                        alt="user avatar"
+                        width={48}
+                        height={48}
+                    />
+                </Link>
             </div>
             <div className="ml-4 flex flex-col flex-grow-[1]">
                 <div className="flex items-center">
