@@ -73,7 +73,8 @@ export default function Groups({ groups, session, user_groups }: {
                 }
                 <button
                     className="bg-transparent hover:bg-btn-background-hover text-foreground font-bold py-2 px-4 my-1 mx-1 rounded border"
-                >Вікрити</button>
+                    onClick={() => router.push(`/groups/${group.id}`)}
+                >Відкрити</button>
             </div>
         </div>
     ))
