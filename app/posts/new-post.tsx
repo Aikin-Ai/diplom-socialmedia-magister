@@ -67,6 +67,9 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
                         id="single"
                         accept="image/*"
                     />
+                    <button className="mt-2 ml-2 mr-auto py-2 px-4 bg-blue-500 rounded-md no-underline text-foreground hover:bg-btn-background-hover">
+                        Надіслати
+                    </button>
                 </div>
             </div>
         </form>
