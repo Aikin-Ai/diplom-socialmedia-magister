@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Sidebar({ current_user_data }: { current_user_data: any }) {
     return (
-        <div className="text-white h-full ml-auto text-xl flex flex-col pr-5">
+        <div className="sticky top-0 text-white h-full ml-auto text-xl flex flex-col pr-5">
             <div className="my-1">
                 <Link
                     href={"/"}
