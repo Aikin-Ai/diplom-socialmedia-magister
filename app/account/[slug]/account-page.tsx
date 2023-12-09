@@ -23,6 +23,7 @@ export default async function AccountPage({ user_id }: { user_id: string }) {
                 alt="user avatar"
                 width={150}
                 height={150}
+            // style={{ height: '150px', width: '150px', objectFit: 'cover' }}
             />
             <div className="my-1 flex flex-col">
                 {/* <p>Повне ім'я: {data.full_name}</p>

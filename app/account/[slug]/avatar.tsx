@@ -72,7 +72,7 @@ export default function Avatar({
                     src={avatarUrl}
                     alt="Avatar"
                     className="rounded-full"
-                    style={{ height: size, width: size }}
+                // style={{ height: size, width: size }}
                 />
             ) : (
                 <div className="rounded-full bg-gray-700" style={{ height: size, width: size }} />

@@ -33,7 +33,6 @@ export default function NewGroup() {
                     type="text"
                     placeholder="Опис (не обов'язково)"
                     className="bg-inherit flex-1 mx-2 text-2xl text leading-loose placeholder-gray-500 px-2 border border-gray-800 rounded my-1"
-                    required
                 />
                 <button
                     type="submit"
