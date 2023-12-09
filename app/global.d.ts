@@ -15,5 +15,6 @@ declare global {
         user_has_reposted_post: boolean;
         user_has_bookmarked_post: boolean;
     }
+    type Group = Database['public']['Tables']['groups']['Row']
     type Profile = Database['public']['Tables']['profiles']['Row']
 }
