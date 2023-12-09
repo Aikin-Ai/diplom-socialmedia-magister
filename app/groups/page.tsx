@@ -28,6 +28,7 @@ export default async function GroupsList() {
     const { data: user_groups } = await supabase
         .from('group-profile')
         .select('group_id')
+        .eq('user_id', session.user.id)
 
     var users_groups: string[] = []
 

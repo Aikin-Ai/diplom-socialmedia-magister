@@ -14,25 +14,23 @@ export default function Groups({ groups, session, user_groups }: {
     const router = useRouter()
 
     async function JoinGroup(id: string) {
-        try {
-            const { data, error } = await supabase
-                .from('group-profile')
-                .insert({ group_id: id, user_id: user.id })
-                .select()
-        } catch (error) {
+        const { data, error } = await supabase
+            .from('group-profile')
+            .insert({ group_id: id, user_id: user.id })
+            .select()
+        if (error) {
             console.error(error)
         }
         router.refresh()
     }
 
     async function LeaveGroup(id: string) {
-        try {
-            const { data, error } = await supabase
-                .from('group-profile')
-                .delete()
-                .eq('group_id', id)
-                .eq('user_id', user.id)
-        } catch (error) {
+        const { data, error } = await supabase
+            .from('group-profile')
+            .delete()
+            .eq('group_id', id)
+            .eq('user_id', user.id)
+        if (error) {
             console.error(error)
         }
         router.refresh()

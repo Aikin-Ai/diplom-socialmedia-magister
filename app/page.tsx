@@ -28,7 +28,7 @@ export default async function Home() {
     .single()
 
   if (current_user_data?.username === null) {
-    redirect('/finishregistration?message=Щоб завершити реєстрацію, введіть ім\'я користувача та повне ім\'я користувача.')
+    redirect("/finishregistration")
   }
 
   const posts = data?.map(post => ({

@@ -13,25 +13,22 @@ export default function FinishRegistrationForm({ session }: { session: Session }
         const username = usernameInput.value;
         const fullName = fullNameInput.value;
 
-        try {
-            let { error } = await supabase
-                .from('profiles')
-                .upsert({
-                    id: user?.id as string,
-                    full_name: fullName,
-                    username: username,
-                    updated_at: new Date().toISOString(),
-                })
-            if (error) throw error
-            redirect('/')
-        } catch (error) {
-            console.error(error)
-        }
+        const { error } = await supabase
+            .from('profiles')
+            .upsert({
+                id: user?.id as string,
+                full_name: fullName,
+                username: username,
+                updated_at: new Date().toISOString(),
+            })
+        console.error(error)
+        redirect('/')
     }
     return (
         <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
             <form
                 className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+                action={updateProfile}
             >
                 <Messages />
                 <label className="text-md" htmlFor="username">
@@ -53,7 +50,8 @@ export default function FinishRegistrationForm({ session }: { session: Session }
                     required
                 />
                 <button className="bg-green-700 rounded px-4 py-2 text-white mb-2"
-                    onClick={() => updateProfile()}>
+                // onClick={() => updateProfile()}
+                >
                     Підтвердити
                 </button>
             </form>
