@@ -27,19 +27,24 @@ export default function Labels({ label }: { label: number | null }) {
 
 function GovernmentOfficialLabel() {
     return (
-        <div>
+        <div className="ml-1">
+            <Image
+                src="/white-house-svgrepo-com.svg"
+                alt="goverment official"
+                width={20}
+                height={20} />
         </div>
     )
 }
 
 function VerifiedLabel() {
     return (
-        <div>
+        <div className="ml-1">
             <svg
                 viewBox="0 0 22 22"
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="20"
+                height="20"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -52,19 +57,19 @@ function VerifiedLabel() {
 
 function ModeratorLabel() {
     return (
-        <div>
+        <div className="ml-1">
         </div>
     )
 }
 
 function BusinessLabel() {
     return (
-        <div>
+        <div className="ml-1">
             <Image
                 src="/city-svgrepo-com.svg"
                 alt="business"
-                width={16}
-                height={16} />
+                width={20}
+                height={20} />
         </div>
     )
 }
