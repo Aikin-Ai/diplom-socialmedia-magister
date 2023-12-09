@@ -5,13 +5,13 @@ import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
-export default function NewPost({ user, avatar_url }: { user: User, avatar_url: string | null }) {
+export default function NewPost({ user, avatar_url, group_id }: { user: User, avatar_url: string | null, group_id: string | null }) {
     const addPost = async (formData: FormData) => {
         'use server'
         const content = String(formData.get('content'))
         const image = formData.get('image')
         const supabase = createServerActionClient()
-        const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id }).select()
+        const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id, group_id }).select()
         if (error) {
             console.error(error)
         }
@@ -42,8 +42,8 @@ export default function NewPost({ user, avatar_url }: { user: User, avatar_url: 
                     />
                 </div>
                 <div className="flex flex-col">
-                    <input name="content"
-                        className="bg-inherit flex-1 ml-2 text-2xl text leading-loose placeholder-gray-500 px-2"
+                    <textarea name="content"
+                        className="bg-inherit flex-1 ml-2 text-2xl text leading-loose placeholder-gray-500 px-2 resize-none w-[400px]"
                         placeholder="Що відбувається?!"
                         required />
                     <label className="cursor-pointer group ml-2 px-2"

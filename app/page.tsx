@@ -19,6 +19,7 @@ export default async function Home() {
   const { data } = await supabase
     .from("posts")
     .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
+    .is('group_id', null)
     .order("created_at", { ascending: false })
 
   const { data: current_user_data } = await supabase
@@ -62,7 +63,7 @@ export default async function Home() {
           ></Image>
           <h1 className="text-xl font-bold ml-2">Домашня сторінка</h1>
         </div>
-        <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} />
+        <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={null} />
         <Posts posts={posts} />
       </div>
     </div>
