@@ -1,5 +1,7 @@
 import { createServerActionClient } from "@/components/CreateServerActionClient"
+import { revalidatePath } from "next/cache"
 export default function NewGroup() {
+
     const addGroup = async (formData: FormData) => {
         'use server'
         const name = String(formData.get('name'))
@@ -9,6 +11,9 @@ export default function NewGroup() {
         if (error) {
             console.error(error)
         }
+        revalidatePath('/groups')
+        // const number = Math.random()
+        // redirect(`/groups?${number}`)
     }
     return (
         <form className="border border-gray-800 border-t-0" action={addGroup}>
