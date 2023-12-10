@@ -23,6 +23,23 @@ export default function Sidebar({ current_user_data }: { current_user_data: any 
                 </Link></div>
             <div className="my-1">
                 <Link
+                    href={"/search"}
+                    className="flex"
+                >
+                    <div className="py-2 px-2 cursor-pointer hover:bg-btn-background rounded-xl flex flex-nowrap">
+                        <Image
+                            className="mr-2"
+                            src="/search.svg"
+                            width={20}
+                            height={20}
+                            alt="search"
+                        ></Image>
+                        Пошук
+                    </div>
+                </Link>
+            </div>
+            <div className="my-1">
+                <Link
                     href={"/groups"}
                     className="flex">
                     <div className="py-2 px-2 cursor-pointer hover:bg-btn-background rounded-xl flex flex-nowrap">
