@@ -1,13 +1,28 @@
 import UserMentionLink from "@/components/UserMentionLink"
+import Link from "next/link"
 
 export default function PostContent({ post }: { post: PostWithAuthor }) {
-    const contentWithMentions = post.content.split(/@(\w+)/g).map((match, index) => {
-        if (index % 2 === 1) {
-            return <UserMentionLink key={match} username={match} />
+    const contentWithMentionsAndHashtags = post.content.split(/@(\w+)|#(\w+)/g).map((match, index) => {
+        if (match === undefined) {
+            return ''
         }
-        return match
+        if (index % 3 === 1) {
+            return <UserMentionLink key={match} username={match} />
+        } else if (index % 3 === 2) {
+            return <Link
+                key={match}
+                href={`/search?search_query=${match}`}
+                className="text-blue-500 hover:underline"
+            >
+                #{match}
+            </Link>
+        } else {
+            return match
+        }
     })
+    const cleanContentWithMentionsAndHashtags = contentWithMentionsAndHashtags.filter((content) => content !== '')
+    console.log(cleanContentWithMentionsAndHashtags)
     return (
-        <div>{contentWithMentions}</div>
+        <div>{cleanContentWithMentionsAndHashtags}</div>
     )
 }
