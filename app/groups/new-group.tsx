@@ -6,10 +6,27 @@ export default function NewGroup() {
         'use server'
         const name = String(formData.get('name'))
         const description = String(formData.get('description'))
+        const image = formData.get('image')
         const supabase = createServerActionClient()
         const { data, error } = await supabase.from('groups').insert({ group_name: name, description }).select()
         if (error) {
             console.error(error)
+        }
+        if (data && (image as File).size !== 0) {
+            const fileExt = (image as File).name.split('.').pop()
+            const { data: imageid, error } = await supabase.storage.from('avatars').upload(`groups/${data[0].id}.${fileExt}`, image as File)
+            if (error) {
+                console.error(error)
+            }
+            if (imageid) {
+                const { data: temp, error } = await supabase.from('groups')
+                    .update({ avatar_url: imageid.path })
+                    .eq('id', data[0].id)
+                    .select()
+                if (error) {
+                    console.error(error)
+                }
+            }
         }
         revalidatePath('/groups')
         // const number = Math.random()
@@ -33,6 +50,27 @@ export default function NewGroup() {
                     type="text"
                     placeholder="Опис (не обов'язково)"
                     className="bg-inherit flex-1 mx-2 text-2xl text leading-loose placeholder-gray-500 px-2 border border-gray-800 rounded my-1"
+                />
+                <label className="cursor-pointer group ml-2 px-2"
+                    htmlFor="single">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="group-hover:stroke-blue-500 stroke-gray-500">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </label>
+                <input
+                    name="image"
+                    className="hidden"
+                    type="file"
+                    id="single"
+                    accept="image/*"
                 />
                 <button
                     type="submit"
