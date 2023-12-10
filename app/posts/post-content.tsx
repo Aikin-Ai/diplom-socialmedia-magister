@@ -11,7 +11,7 @@ export default function PostContent({ post }: { post: PostWithAuthor }) {
         } else if (index % 3 === 2) {
             return <Link
                 key={match}
-                href={`/search?search_query=${match}`}
+                href={`/search?search_query=${'%23' + match}`}
                 className="text-blue-500 hover:underline"
             >
                 #{match}
@@ -21,7 +21,6 @@ export default function PostContent({ post }: { post: PostWithAuthor }) {
         }
     })
     const cleanContentWithMentionsAndHashtags = contentWithMentionsAndHashtags.filter((content) => content !== '')
-    console.log(cleanContentWithMentionsAndHashtags)
     return (
         <div>{cleanContentWithMentionsAndHashtags}</div>
     )

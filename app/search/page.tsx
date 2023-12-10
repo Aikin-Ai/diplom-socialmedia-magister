@@ -74,7 +74,7 @@ export default async function Search({
                     ></Image>
                     <h1 className="text-xl font-bold ml-2">Домашня сторінка</h1>
                 </div>
-                <SearchBox />
+                <SearchBox previousSearchQuery={search_query} />
                 <Posts posts={posts} />
             </div>
         </div>
