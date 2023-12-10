@@ -42,7 +42,7 @@ export default function NewPost({ user, avatar_url, group_id }: { user: User, av
                     />
                 </div>
                 <div className="flex flex-col">
-                    <textarea name="content"
+                    <input name="content" //Заменить на textarea
                         className="bg-inherit flex-1 ml-2 text-2xl text leading-loose placeholder-gray-500 px-2 resize-none w-[400px]"
                         placeholder="Що відбувається?!"
                         required />

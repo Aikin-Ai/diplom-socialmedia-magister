@@ -4,6 +4,7 @@ import Sidebar from "@/app/sidebar/sidebar";
 import { createServerComponentClient } from "@/components/CreateServerComponentClient";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import GroupInfo from "./group-info";
 
 export default async function Group({ params }: { params: { slug: string } }) {
 
@@ -16,6 +17,16 @@ export default async function Group({ params }: { params: { slug: string } }) {
     }
 
     const groupid = params.slug
+
+    const { data: group_info } = await supabase
+        .from('groups')
+        .select('group_name, description, avatar_url')
+        .eq('id', groupid)
+        .single()
+
+    if (!group_info) {
+        redirect('/404')
+    }
 
     const { data } = await supabase
         .from("posts")
@@ -47,11 +58,21 @@ export default async function Group({ params }: { params: { slug: string } }) {
         .eq('id', session.user.id)
         .single()
 
-    const { data: group_name } = await supabase
-        .from('groups')
-        .select('group_name')
-        .eq('id', groupid)
-        .single()
+    const { data: group_member_id } = await supabase
+        .from('group-profile')
+        .select('user_id')
+        .eq('group_id', groupid)
+
+    let group_member_ids = group_member_id?.map(member => member.user_id)
+
+    if (!group_member_ids) {
+        group_member_ids = []
+    }
+
+    const { data: group_members } = await supabase
+        .from('profiles')
+        .select(`id, avatar_url, username`)
+        .in('id', group_member_ids)
 
     return (
         <div className="flex">
@@ -64,7 +85,7 @@ export default async function Group({ params }: { params: { slug: string } }) {
                         height={25}
                         alt="Kharkiv"
                     ></Image>
-                    <h1 className="text-xl font-bold ml-2">{group_name?.group_name}</h1>
+                    <h1 className="text-xl font-bold ml-2">{group_info?.group_name}</h1>
                 </div>
                 {/* <button>
                     <svg
@@ -81,6 +102,9 @@ export default async function Group({ params }: { params: { slug: string } }) {
                 </button> */}
                 <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={groupid} />
                 <Posts posts={posts} />
+            </div>
+            <div className="w-1/6">
+                <GroupInfo group_info={group_info} group_members={group_members} />
             </div>
         </div>
     )
