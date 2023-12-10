@@ -1,5 +1,7 @@
 import { createServerComponentClient } from "@/components/CreateServerComponentClient";
+import { Session, SupabaseClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import NewPost from "./posts/new-post";
 import Posts from "./posts/posts";
@@ -7,7 +9,11 @@ import Sidebar from "./sidebar/sidebar";
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const supabase = createServerComponentClient();
 
   const { data: { session } } = await supabase.auth.getSession()
@@ -16,11 +22,25 @@ export default async function Home() {
     redirect('/login')
   }
 
-  const { data } = await supabase
-    .from("posts")
-    .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
-    .is('group_id', null)
-    .order("created_at", { ascending: false })
+  // const { data } = await supabase
+  //   .from("posts")
+  //   .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
+  //   .is('group_id', null)
+  //   .order("created_at", { ascending: false })
+
+  let post_type = 'all'
+
+  if (Array.isArray(searchParams.post_type)) {
+    post_type = searchParams.post_type[0]
+  } else if (searchParams.post_type) {
+    post_type = searchParams.post_type
+  }
+
+  const { data } = await DataChooser({
+    post_type: post_type,
+    supabase,
+    session
+  })
 
   const { data: current_user_data } = await supabase
     .from("profiles")
@@ -64,8 +84,78 @@ export default async function Home() {
           <h1 className="text-xl font-bold ml-2">Домашня сторінка</h1>
         </div>
         <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={null} />
+        <PostSwitch current_post_type={post_type} />
         <Posts posts={posts} />
       </div>
     </div>
   )
+}
+
+function PostSwitch({ current_post_type }: { current_post_type: string }) {
+  return (
+    <div className="flex justify-evenly">
+      <Link
+        className={`border border-gray-800 border-t-0 flex-1 text-center ${current_post_type === 'all' ? 'border-b-blue-500' : ''} hover:bg-btn-background-hover`}
+        href={{
+          pathname: "/",
+          query: {
+            post_type: "all"
+          }
+        }}
+      >
+        Всі пости
+      </Link>
+      <Link
+        className={`border border-gray-800 border-t-0 flex-1 text-center ${current_post_type === 'subscribed_groups' ? 'border-b-blue-500' : ''} hover:bg-btn-background-hover`}
+        href={{
+          pathname: "/",
+          query: {
+            post_type: "subscribed_groups"
+          }
+        }}
+      >
+        Ваші підписки
+      </Link>
+    </div>
+  )
+}
+
+async function DataChooser({
+  post_type,
+  supabase,
+  session
+}: {
+  post_type: string;
+  supabase: SupabaseClient<Database>;
+  session: Session
+}) {
+  if (post_type === 'subscribed_groups') {
+    const { data: users_groups } = await supabase
+      .from('group-profile')
+      .select('group_id')
+      .eq('user_id', session.user.id)
+
+    var group_ids: string[] = []
+
+    if (!users_groups) {
+      group_ids = []
+    } else {
+      users_groups?.map((group) => {
+        group_ids.push(group.group_id)
+      })
+    }
+
+    return supabase
+      .from("posts")
+      .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
+      .in('group_id', group_ids)
+      .order("created_at", { ascending: false })
+
+  } else {
+    return supabase
+      .from("posts")
+      .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
+      .is('group_id', null)
+      .order("created_at", { ascending: false })
+  }
 }
