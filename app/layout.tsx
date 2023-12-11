@@ -1,6 +1,7 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Metadata } from 'next'
-import './globals.css'
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,6 +19,7 @@ export default function RootLayout({
         <main className="min-h-screen bg-background flex flex-col items-center">
           {children}
           <SpeedInsights />
+          <Analytics />
         </main>
       </body>
     </html>
