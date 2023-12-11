@@ -1,5 +1,6 @@
 import ImageURLTransformer from "@/components/ImageURLTransformer";
 import Image from "next/image";
+import Link from "next/link";
 export default function GroupInfo({ group_info, group_members }: {
     group_info: {
         group_name: string;
@@ -35,7 +36,7 @@ export default function GroupInfo({ group_info, group_members }: {
             <div className="p-1 border border-gray-800">
                 <div className="flex justify-between flex-wrap">
                     {group_members?.map((member) => (
-                        <div key={member.id} className="p-1 flex flex-col items-center">
+                        <Link key={member.id} className="p-1 flex flex-col items-center" href={`/account/${member.username}`}>
                             <Image
                                 className="rounded-full"
                                 src={ImageURLTransformer({ bucket_name: 'avatars', image_url: member.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
@@ -44,7 +45,7 @@ export default function GroupInfo({ group_info, group_members }: {
                                 height={50}
                             />
                             <div className="text-sm">{member.username}</div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
