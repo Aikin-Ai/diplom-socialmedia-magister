@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata } from 'next'
 import './globals.css'
 
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body>
         <main className="min-h-screen bg-background flex flex-col items-center">
           {children}
+          <SpeedInsights />
         </main>
       </body>
     </html>
