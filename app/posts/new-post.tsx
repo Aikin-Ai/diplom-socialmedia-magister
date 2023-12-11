@@ -46,27 +46,42 @@ export default function NewPost({ user, avatar_url, group_id }: { user: User, av
                         className="bg-inherit flex-1 ml-2 text-2xl text leading-loose placeholder-gray-500 px-2 resize-none w-[400px]"
                         placeholder="Що відбувається?!"
                         required />
-                    <label className="cursor-pointer group ml-2 px-2"
-                        htmlFor="single">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="group-hover:stroke-blue-500 stroke-gray-500">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                    </label>
-                    <input
-                        name="image"
-                        className="hidden"
-                        type="file"
-                        id="single"
-                        accept="image/*"
-                    />
+                    <div className="flex">
+                        <label className="cursor-pointer group ml-2 px-2"
+                            htmlFor="single">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="group-hover:stroke-blue-500 stroke-gray-500">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </label>
+                        <input
+                            name="image"
+                            className="hidden"
+                            type="file"
+                            id="single"
+                            accept="image/*"
+                        />
+                        <button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="hover:stroke-blue-500 stroke-gray-500">
+                                <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                        </button>
+                    </div>
                     <button className="mt-2 ml-2 mr-auto py-2 px-4 bg-blue-500 rounded-md no-underline text-foreground hover:bg-btn-background-hover">
                         Надіслати
                     </button>
