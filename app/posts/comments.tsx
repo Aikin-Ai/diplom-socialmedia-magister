@@ -1,7 +1,9 @@
 'use client'
 
-export default function Comments() {
-    return <button className="group flex items-center">
+import Link from "next/link"
+
+export default function Comments({ id }: { id: string }) {
+    return <Link href={`/post/${id}`} className="group flex items-center">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -19,5 +21,5 @@ export default function Comments() {
             {/* {post.comments} */}
             2
         </span>
-    </button>
+    </Link>
 }

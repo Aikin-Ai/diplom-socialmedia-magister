@@ -112,7 +112,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
                     <Bookmarks post={post} addOptimisticPost={addOptimisticPost} />
                     <Reposts post={post} addOptimisticPost={addOptimisticPost} />
-                    <Comments />
+                    <Comments id={post.id} />
                 </div>
             </div>
         </div>
