@@ -1,19 +1,14 @@
-'use client'
+// 'use client'
+import NewPost from "@/app/posts/new-post"
 import Posts from "@/app/posts/posts"
 import Sidebar from "@/app/sidebar/sidebar"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { createServerComponentClient } from "@/components/CreateServerComponentClient"
 import Image from "next/image"
-import { redirect, useRouter } from "next/navigation"
-import { useCallback } from "react"
+import { redirect } from "next/navigation"
+import BackButton from "./back-button"
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
-    const router = useRouter()
-
-    const onClick = useCallback(() => {
-        router.back()
-    }, [router])
-
-    const supabase = createClientComponentClient<Database>()
+    const supabase = createServerComponentClient()
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session) {
@@ -55,6 +50,34 @@ export default async function PostPage({ params }: { params: { slug: string } })
         .eq('id', session.user.id)
         .single()
 
+    const { data: comments_data } = await supabase
+        .from("posts")
+        .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
+        .eq('parent_post', postid)
+        .order("created_at", { ascending: false })
+
+    var comments = null
+
+    if (comments_data) {
+        comments = comments_data?.map(post => ({
+            ...post,
+            author: Array.isArray(post.author) ? post.author[0] : post.author,
+            user_has_liked_post: !!post.likes.find(
+                (like) => like.user_id === session.user.id
+            ),
+            user_has_reposted_post: !!post.reposts.find(
+                (repost) => repost.user_id === session.user.id
+            ),
+            user_has_bookmarked_post: !!post.bookmarks.find(
+                (bookmark) => bookmark.user_id === session.user.id
+            ),
+            likes: post.likes.length,
+            reposts: post.reposts.length,
+            bookmarks: post.bookmarks.length,
+            image_url: post.images[0]?.image_url
+        })) ?? [];
+    }
+
     return (
         <div className="flex">
             <Sidebar current_user_data={current_user_data} />
@@ -67,19 +90,11 @@ export default async function PostPage({ params }: { params: { slug: string } })
                         alt="Kharkiv"
                     ></Image>
                     {/* <h1 className="text-xl font-bold ml-2">{group_info?.group_name}</h1> */}
-                    <button
-                        className="rounded-full"
-                        onClick={onClick}
-                    >
-                        <Image
-                            src='/arrow-left.svg'
-                            width={25}
-                            height={25}
-                            alt="back"
-                        />
-                    </button>
+                    <BackButton />
                 </div>
                 <Posts posts={posts} />
+                <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={null} parent_post={postid} />
+                {comments && <Posts posts={comments} />}
             </div>
         </div>
     )

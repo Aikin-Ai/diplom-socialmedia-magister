@@ -83,7 +83,7 @@ export default async function Home({
           ></Image>
           <h1 className="text-xl font-bold ml-2">Домашня сторінка</h1>
         </div>
-        <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={null} />
+        <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={null} parent_post={null} />
         <PostSwitch current_post_type={post_type} />
         <Posts posts={posts} />
       </div>
@@ -149,6 +149,7 @@ async function DataChooser({
       .from("posts")
       .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
       .in('group_id', group_ids)
+      .is('parent_post', null)
       .order("created_at", { ascending: false })
 
   } else {
@@ -156,6 +157,7 @@ async function DataChooser({
       .from("posts")
       .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
       .is('group_id', null)
+      .is('parent_post', null)
       .order("created_at", { ascending: false })
   }
 }
