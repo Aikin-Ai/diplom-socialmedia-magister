@@ -78,7 +78,7 @@ export default async function Group({ params }: { params: { slug: string } }) {
     return (
         <div className="flex">
             <Sidebar current_user_data={current_user_data} />
-            <div className="text-white w-full max-w-xl mr-auto ml-4 min-w-[600px]">
+            <div className="text-white w-full max-w-xl mr-4 ml-4 min-w-[600px]">
                 <div className="flex justify-start px-4 py-6 border border-gray-800 border-t-0">
                     <Image
                         src="/Coat_of_arms_of_Kharkiv.svg"

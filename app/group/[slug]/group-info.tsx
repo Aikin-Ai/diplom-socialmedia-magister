@@ -14,7 +14,7 @@ export default function GroupInfo({ group_info, group_members }: {
     }[] | null
 }) {
     return (
-        <div className="text-white h-full mr-auto flex flex-col">
+        <div className="text-white h-full mr-auto flex flex-col min-w-[270px]">
             <div className="p-1 border border-gray-800">
                 <Image
                     className="rounded-full"
@@ -36,7 +36,7 @@ export default function GroupInfo({ group_info, group_members }: {
             <div className="p-1 border border-gray-800">
                 <div className="flex justify-between flex-wrap">
                     {group_members?.map((member) => (
-                        <Link key={member.id} className="p-1 flex flex-col items-center" href={`/account/${member.username}`}>
+                        <Link key={member.id} className="p-1 basis-1/2 grow flex flex-col items-center" href={`/account/${member.username}`}>
                             <Image
                                 className="rounded-full"
                                 src={ImageURLTransformer({ bucket_name: 'avatars', image_url: member.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
