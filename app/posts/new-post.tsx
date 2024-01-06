@@ -5,13 +5,13 @@ import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
-export default function NewPost({ user, avatar_url, group_id }: { user: User, avatar_url: string | null, group_id: string | null }) {
+export default function NewPost({ user, avatar_url, group_id, parent_post }: { user: User, avatar_url: string | null, group_id: string | null, parent_post: string | null }) {
     const addPost = async (formData: FormData) => {
         'use server'
         const content = String(formData.get('content'))
         const image = formData.get('image')
         const supabase = createServerActionClient()
-        const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id, group_id }).select()
+        const { data, error } = await supabase.from('posts').insert({ content, user_id: user.id, group_id, parent_post }).select()
         if (error) {
             console.error(error)
         }

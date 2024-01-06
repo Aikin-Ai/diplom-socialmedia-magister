@@ -32,6 +32,7 @@ export default async function Group({ params }: { params: { slug: string } }) {
         .from("posts")
         .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
         .eq('group_id', groupid)
+        .is('parent_post', null)
         .order("created_at", { ascending: false })
 
     const posts = data?.map(post => ({
@@ -100,7 +101,7 @@ export default async function Group({ params }: { params: { slug: string } }) {
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
                 </button> */}
-                <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={groupid} />
+                <NewPost user={session.user} avatar_url={current_user_data?.avatar_url ?? null} group_id={groupid} parent_post={null} />
                 <Posts posts={posts} />
             </div>
             <div className="w-1/6">

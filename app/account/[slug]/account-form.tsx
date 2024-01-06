@@ -75,17 +75,40 @@ export default function AccountForm({ session }: { session: Session }) {
         }
     }
 
+    const deleteUser = async () => {
+        const { error } = await supabase
+            .from('profiles')
+            .delete()
+            .eq('id', user.id)
+        if (error) {
+            throw error
+        }
+    }
+
     return (
         <div className="form-widget border border-gray-800 border-t-0 pt-3 px-3 pb-2">
-            <Avatar
-                uid={user.id}
-                url={avatar_url}
-                size={150}
-                onUpload={(url) => {
-                    setAvatarUrl(url)
-                    updateProfile({ fullname, username, website, avatar_url: url })
-                }}
-            />
+            <div className="flex justify-between">
+                <Avatar
+                    uid={user.id}
+                    url={avatar_url}
+                    size={150}
+                    onUpload={(url) => {
+                        setAvatarUrl(url)
+                        updateProfile({ fullname, username, website, avatar_url: url })
+                    }}
+                />
+                <div>
+                    <button
+                        className="button block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => {
+                            deleteUser()
+                            window.location.reload()
+                        }}
+                    >
+                        Видалити профіль
+                    </button>
+                </div>
+            </div>
             <div className="my-1 flex flex-col">
                 <label htmlFor="email">Email </label>
                 <input id="email" type="text" value={session?.user.email} disabled className="border rounded p-2 bg-inherit border-gray-500" />

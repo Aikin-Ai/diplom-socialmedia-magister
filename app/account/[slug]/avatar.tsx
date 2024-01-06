@@ -78,7 +78,11 @@ export default function Avatar({
                 <div className="rounded-full bg-gray-700" style={{ height: size, width: size }} />
             )}
             <div style={{ width: size }}>
-                <label className="cursor-pointer" htmlFor="single">
+                <label
+                    // className="cursor-pointer"
+                    // className="button block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    className="button block bg-transparent border hover:bg-btn-background-hover text-white font-bold py-2 px-4 rounded cursor-pointer"
+                    htmlFor="single">
                     {uploading ? 'Завантаження...' : 'Завантажити'}
                 </label>
                 <input

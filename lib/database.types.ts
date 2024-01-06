@@ -180,12 +180,117 @@ export interface Database {
           }
         ]
       }
+      poll_options: {
+        Row: {
+          id: string
+          option_text: string
+          place_in_poll: number
+          poll_id: string
+        }
+        Insert: {
+          id?: string
+          option_text: string
+          place_in_poll: number
+          poll_id: string
+        }
+        Update: {
+          id?: string
+          option_text?: string
+          place_in_poll?: number
+          poll_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_options_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      poll_responses: {
+        Row: {
+          created_at: string
+          id: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_id?: string
+          poll_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_responses_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "poll_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_responses_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_responses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      polls: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          question: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          question: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          question?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "polls_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       posts: {
         Row: {
           content: string
           created_at: string
           group_id: string | null
           id: string
+          parent_post: string | null
           user_id: string
         }
         Insert: {
@@ -193,6 +298,7 @@ export interface Database {
           created_at?: string
           group_id?: string | null
           id?: string
+          parent_post?: string | null
           user_id: string
         }
         Update: {
@@ -200,6 +306,7 @@ export interface Database {
           created_at?: string
           group_id?: string | null
           id?: string
+          parent_post?: string | null
           user_id?: string
         }
         Relationships: [
@@ -208,6 +315,13 @@ export interface Database {
             columns: ["group_id"]
             isOneToOne: false
             referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_parent_post_fkey"
+            columns: ["parent_post"]
+            isOneToOne: false
+            referencedRelation: "posts"
             referencedColumns: ["id"]
           },
           {

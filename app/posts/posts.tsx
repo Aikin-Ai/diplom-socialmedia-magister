@@ -106,7 +106,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                         - {formatDate(post.created_at)}
                     </div>
                 </div>
-                <p>{isClient ? <PostContent post={post} /> : post.content}</p>
+                <div>{isClient ? <PostContent post={post} /> : post.content}</div>
                 {post.image_url && <ImageWithModal image_url={post.image_url} />}
                 <div className="flex justify-between">
                     <Likes post={post} addOptimisticPost={addOptimisticPost} />
