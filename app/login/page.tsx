@@ -29,6 +29,15 @@ export default function Login() {
         action="/auth/sign-in"
         method="post"
       >
+        <div
+          className="text-md text-gray-500 border rounded px-4 py-2 mb-2"
+        >
+          Дані для демонстраційного користувача:
+          <br />
+          Email: test@example.com
+          <br />
+          Пароль: Test123
+        </div>
         <label className="text-md" htmlFor="email">
           Email
         </label>
@@ -39,7 +48,7 @@ export default function Login() {
           required
         />
         <label className="text-md" htmlFor="password">
-          Password
+          Пароль
         </label>
         <input
           className="rounded-md px-4 py-2 bg-inherit border mb-6"
@@ -49,13 +58,13 @@ export default function Login() {
           required
         />
         <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
-          Sign In
+          Увійти
         </button>
         <button
           formAction="/auth/sign-up"
           className="border border-gray-700 bg-black rounded px-4 py-2 text-white mb-2"
         >
-          Sign Up
+          Зареєструватися
         </button>
         <Messages />
       </form>
