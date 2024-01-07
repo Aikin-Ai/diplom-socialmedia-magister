@@ -32,7 +32,12 @@ export default async function SubscriptionPage() {
                         <div className="text-xl font-bold">
                             200грн/місяць
                         </div>
-                        <button className="py-2 px-4 rounded-md no-underline bg-blue-500 hover:bg-blue-700">Підписатися</button>
+                        <a
+                            className="py-2 px-4 border rounded-md no-underline bg-blue-500 hover:bg-blue-700 cursor-pointer font-bold"
+                            href="mailto: andreyrez02@gmail.com?subject=Підписка&body=Інтересує%20підписка"
+                        >
+                            Підписатися
+                        </a>
                         <br />
                     </div>
                     <h1 className="text-xl font-bold text-center">🌟 Представляємо Преміум Верифікацію Плюс: Підвищуйте свою соціальну присутність! 🌟</h1>
@@ -62,7 +67,12 @@ export default async function SubscriptionPage() {
                         <div className="text-xl font-bold">
                             200грн/місяць
                         </div>
-                        <button className="py-2 px-4 rounded-md no-underline bg-blue-500 hover:bg-blue-700">Підписатися</button>
+                        <a
+                            className="py-2 px-4 border rounded-md no-underline bg-blue-500 hover:bg-blue-700 cursor-pointer font-bold"
+                            href="mailto: andreyrez02@gmail.com?subject=Підписка&body=Інтересує%20підписка"
+                        >
+                            Підписатися
+                        </a>
                     </div>
                 </div>
             </div>
