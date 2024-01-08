@@ -22,12 +22,6 @@ export default async function Home({
     redirect('/login')
   }
 
-  // const { data } = await supabase
-  //   .from("posts")
-  //   .select("*, author: profiles(*), likes(user_id), reposts(user_id), bookmarks(user_id), images(user_id, image_url)")
-  //   .is('group_id', null)
-  //   .order("created_at", { ascending: false })
-
   let post_type = 'all'
 
   if (Array.isArray(searchParams.post_type)) {

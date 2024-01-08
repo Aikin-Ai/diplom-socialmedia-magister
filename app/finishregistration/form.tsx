@@ -10,8 +10,14 @@ export default function FinishRegistrationForm({ session }: { session: Session }
         const usernameInput = document.querySelector('input[name="username"]') as HTMLInputElement;
         const fullNameInput = document.querySelector('input[name="full_name"]') as HTMLInputElement;
 
-        const username = usernameInput.value;
+        const usernameRaw = usernameInput.value;
         const fullName = fullNameInput.value;
+
+        let username = usernameRaw.trim();
+
+        if (username.substring(0, 1) === '@') {
+            username = username.substring(1);
+        }
 
         const { error } = await supabase
             .from('profiles')
