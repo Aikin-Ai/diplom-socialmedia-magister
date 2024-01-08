@@ -1,6 +1,25 @@
+'use client'
+import { useState } from 'react'
 import Messages from './messages'
 
 export default function Login() {
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
+
+  function handleChange(e: any) {
+    setPassword(e.target.value)
+    const requierements = [
+      password.length >= 6,
+      password.match(/[a-z]/),
+      password.match(/[A-Z]/),
+      password.match(/[0-9]/),
+    ]
+
+    setError(!requierements.every((r) => r))
+  }
+
+
+
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       {/* <Link
@@ -55,14 +74,21 @@ export default function Login() {
           type="password"
           name="password"
           placeholder="••••••••"
+          onChange={handleChange}
           required
         />
+        <div className="text-red-500 text-sm">
+          {error ? 'Пароль повинен містити мінімум 6 символів, великі та малі літери та цифри' : ''}
+        </div>
         <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
           Увійти
         </button>
         <button
           formAction="/auth/sign-up"
+          formMethod='post'
+          name='sign-up'
           className="border border-gray-700 bg-black rounded px-4 py-2 text-white mb-2"
+          disabled={error || password.length < 6}
         >
           Зареєструватися
         </button>

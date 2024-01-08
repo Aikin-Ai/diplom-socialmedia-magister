@@ -29,9 +29,9 @@ export default async function SubscriptionPage() {
                 </div>
                 <div className="px-4 py-6 border border-gray-800 border-t-0">
                     <div className="flex flex-col justify-center text-center">
-                        <div className="text-xl font-bold">
+                        {/* <div className="text-xl font-bold">
                             200грн/місяць
-                        </div>
+                        </div> */}
                         <a
                             className="py-2 px-4 border rounded-md no-underline bg-blue-500 hover:bg-blue-700 cursor-pointer font-bold"
                             href="mailto: andreyrez02@gmail.com?subject=Підписка&body=Інтересує%20підписка"
@@ -64,9 +64,9 @@ export default async function SubscriptionPage() {
                     <h2 className="text-center font-bold text-lg">🌐Підпишіться зараз і дозвольте своїй соціальній подорожі злетіти до нових висот! 🚀</h2>
                     <div className="flex flex-col justify-center text-center">
                         <br />
-                        <div className="text-xl font-bold">
+                        {/* <div className="text-xl font-bold">
                             200грн/місяць
-                        </div>
+                        </div> */}
                         <a
                             className="py-2 px-4 border rounded-md no-underline bg-blue-500 hover:bg-blue-700 cursor-pointer font-bold"
                             href="mailto: andreyrez02@gmail.com?subject=Підписка&body=Інтересує%20підписка"

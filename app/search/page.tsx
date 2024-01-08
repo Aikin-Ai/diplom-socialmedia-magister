@@ -89,7 +89,7 @@ async function SearchChooser({
     supabase: SupabaseClient<Database>;
 }) {
     if (search_query.startsWith('@')) {
-        const query = search_query.slice(1)
+        // const query = search_query.slice(1)
         const { data: users } = await supabase
             .from('profiles')
             .select('id')
