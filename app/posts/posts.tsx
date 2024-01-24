@@ -78,7 +78,7 @@ export default function Posts({ posts }: { posts: PostWithAuthor[] }) {
                     href={`/account/${post.author.username}`}
                 >
                     <Image
-                        className="rounded-full"
+                        className="rounded-full min-h-[48px] min-w-[48px]"
                         src={ImageURLTransformer({ bucket_name: 'avatars', image_url: post.author.avatar_url }) ?? '/Profile_avatar_placeholder_large.png'}
                         alt="user avatar"
                         width={48}
